@@ -1,0 +1,41 @@
+{% extends 'mainPage/mainPage.html' %}
+
+{% block title %} Меню {% endblock %}
+
+{% block content %}
+    <ul>
+        {% for pizza in menu %}
+        <li>
+            <div style="display: flex;
+                        overflow: hidden;
+                        justify-content: center;"class="product_image">
+                <img src="{{ pizza.image.url }}">
+            </div>
+            <div class="product_info"> 
+                <h3>{{ pizza.name }}</h3>
+                <p>{{ pizza.cost }} ₽</p>
+                {% if role == "Admin" %}
+                <div>
+                    <a href="{% url 'updatePizza' pizza.id %}">Обновить пиццу</a>
+                </div>
+                <div >
+                    <a href="{% url 'deletePizza' pizza.id %}">Удалить пиццу</a>
+                </div>
+                {% else %}
+                <div >
+                    <a style="display: inline-block;
+                              background-color: green;
+                              color: white;
+                              padding: 10px 20px;
+                              border: none;
+                              border-radius: 20px;
+                              font-size: 16px;
+                              cursor: pointer; text-decoration: none;" 
+                              href="{% url 'addPizzaSell' pizza.id %}">Добавить в корзину</a>
+                </div>
+             </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

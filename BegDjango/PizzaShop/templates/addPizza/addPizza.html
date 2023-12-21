@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление пиццы</title>
+    <link rel="stylesheet" href="{% static 'addPizza/addPizza.css' %}">
+</head>
+<body>
+    <h2>Добавление пиццы</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {% for value in form %}
+        <div class="form-style">
+            {{ value.label_tag }}
+            {{ value.errors }}
+            {{ value }}
+        </div>
+        {% endfor %}
+        <button type="submit">Добавить пиццу</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{% extends 'sellbag/sellbagmain.html' %}
+
+{% block title %} Моя корзина {% endblock %}
+
+{% block content %}
+    {% if menu %}
+    <div class="shop_container">
+        <var class="bag_sale" style="display: flex;
+                                      justify-content: space-between;
+                                      align-items: center;">
+            <h1 style=" font-family: Arial, sans-serif;">Моя корзина</h1>
+            <a href="{% url 'menu' %}" style="text-decoration: none;">Назад</a>
+        </var>
+        <table>
+            <thead>
+                <tr>
+                    <th>Название пиццы</th>
+                    <th>Стоимость</th>
+                    <th>Количество</th>
+                    <th>Полная стоимость</th>
+                </tr>
+            </thead>
+
+            {% for pizza in menu %}
+                <tbody>
+                    <td> 
+                        {{ pizza.name }}
+                        <a href="{% url 'deletePizzaOrder' pizza.id %}" style="text-decoration: none" class="button_delete">&#10060;</a>
+                    </td>
+                    <td> {{ pizza.cost }}₽ </td>
+                    <td>
+                        {% if pizza.count == 1 %}
+                            <a href="{% url 'updateCountMinus' pizza.id %}" style="pointer-events: none; background-color: gray;" class="button_pay">-</a>
+                        {% else %}
+                            <a href="{% url 'updateCountMinus' pizza.id %}" class="button_pay">-</a>
+                        {% endif %}
+                        {{ pizza.count }}
+                        <a href="{% url 'updateCountPlus' pizza.id %}" class="button_pay">+</a>
+                    </td>
+                    {% widthratio pizza.cost 1 pizza.count as ratio %}
+                    <td> {{ ratio }}₽ </td>
+                </tbody>
+            {% endfor %}
+        </table>
+        <div class="total">
+            К оплате: {{ cost }}₽
+        </div>
+        <a class="button_pay">Оплатить</a>
+    </div>
+    {% else %}
+        <h3>Ваша корзина пуста!</h3>
+    {% endif %}
+
+{% endblock %}

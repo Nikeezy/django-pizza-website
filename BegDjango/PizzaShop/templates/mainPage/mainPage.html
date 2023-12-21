@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" type='text/css' href="{% static 'css/mainPage/mainPage.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Healthy Pizza</h1>
+        <nav>
+            <ul>
+                {% if login %}
+                <li><a href="">Мой профиль</a>
+                    {% if role == "Admin" %}
+                    <li><a href="{% url 'addPizza' %}">Добавить пиццу</a>
+                    {% elif role == "Member" %}
+                    <li><a href="{% url 'sellBag' %}">Корзина</a>
+                    {% endif %}
+                    <li><a href="{% url 'logout' %}">Выйти</a>
+                {% else %}
+                <li><a href="{% url 'authorization' %}">Войти</a>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="main_text">
+            <h2>Добро пожаловать в Healthy Pizza</h2>
+            <p>Вкусная пицца по доступной цене!</p>
+        </section>
+        <section class="menu">
+            <h2>Наше меню</h2>
+                {% block content %}
+                {% endblock %}
+        </section>
+    </main>
+</body>
+</html>
